@@ -18,6 +18,7 @@ import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonWriter;
 
 public class AccessoryController {
 
@@ -65,8 +66,9 @@ public class AccessoryController {
     }
 
     try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-      Json.createWriter(baos)
-          .write(Json.createObjectBuilder().add("accessories", accessories).build());
+      JsonWriter writer = Json.createWriter(baos);
+      writer.write(Json.createObjectBuilder().add("accessories", accessories).build());
+      writer.close();
       return new HapJsonResponse(baos.toByteArray());
     }
   }
